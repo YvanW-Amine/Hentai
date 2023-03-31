@@ -19,7 +19,7 @@ aria2c '磁力链接'
 列出种子内容：
 aria2c -S 1.torrent
 下载种子内编号为1、4、5、6、7的文件，如：
-aria2c --select-file=13-102 1.torrent --seed-time=0
+aria2c --select-file=158-167 1.torrent --seed-time=0
 设置bt端口：aria2c --listen-port=3653 ‘1.torrent’
 3、限速下载
 单个文件最大下载速度：
@@ -28,12 +28,12 @@ aria2c --max-download-limit=300K -s10 -x10 'http://xx.com/xx'
 aria2c --max-overall-download-limit=300k -s10 -x10 'http://xx.com/xx'
 
 授权认证
-点击右侧URL登录并授权，授权地址→【国际版、个人版(家庭版)】、【中国版(世纪互联)】。
+点击右侧URL登录并授权，授权地址→https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=78d4dc35-7e46-42c6-9023-2d39314433a5&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All
 1、下载，并给权限
 wget https://raw.githubusercontent.com/MoeClub/OneList/master/OneDriveUploader/amd64/linux/OneDriveUploader
 chmod +x OneDriveUploader
 2、初始化
-OneDriveUploader -a "url"
+OneDriveUploader -a "http://localhost/onedrive-login?code=0.AVUAZuawYEqOpkCHK9lTDHufNjXc1HhGfsZCkCMtOTFEM6WIAO0.AgABAAIAAAD--DLA3VO7QrddgJg7WevrAgDs_wUA9P-qEWdF_hUElR73mHWImsSZswpGz-5lDAbF3RExqpAkpcCIdHgtiZdSQUoxey3T2yjsmlQvmUQj3efdM7UPdDDbxnLT4Z_YPqrxdOZo3nZyy1b8QKQni8ZVXZ-YHI3xeqsRUtzJg9j6zxvuNjt42I0D73Dm7CZqYrFXFLdnEBJ87Eoqiic0OwHcYBlCuITRSpjhBlql1Xg8Hy5R6t7mYlLn_Scr-hCxl2qaoNAgFzdlnlkn5RluEbCnqHwQ4pAuHvO4BwOs3jGh1sRIjKvoDF1witsYqSVn1jpNy1RGaeqXgl7vEV2vEPQUE78VGSe3KQHS4w3xvGSNucl-tU15H7tyDIETz_4cCzP49VpJ7dkm6CGhngiSy0bmTNY98fstaIniDLRjr2TOZYUG0HmVtQXvgz59aLRQU6gMrMpmeZMA-U85kEiT-2igfxD5lHl0cNQ1544Qio4Nl3jJnWc3r-hdO425V4xwu_jYiqgBCpqud6zEUIfcs0BxojCiw7SrhCHojgAqBR_3U5gRKBItJ3EGwrhlFw0WXg0F9A1NuJh7M0UK8WNI2KQvTPmv5h-CqsWan603GcsEJ0dokegTJkLBBd1Hrf0nS4RSQrornvbEGsGDdRHyyRYpkbmjqGAVwbQ7Ga5NjrvCddv-nb0PyUReUYi6u4rSY1UluMa3G1t05ZHMgdkuIsE2IbqhG-Sdit5Q&session_state=58fe6728-cd48-4ddd-b9d5-1bee1d2b1590#"
 把url替换为上图浏览器中获得的地址，以http://loaclhost开头的。一次授权，以后就不会用到了。
 3、配置文件
 授权成功后，就在同目录生成了配置文件 auth.json (所以，为便于操作，选择个好记的目录执行 初始化)
@@ -57,7 +57,7 @@ OneDriveUploader -s "mm00.jpg" -n "mm01.jpg"
 # 将同目录下的 Download 文件夹上传到 OneDrive 网盘根目录
 OneDriveUploader -s "Download"
 # 将同目录下的 Download 文件夹上传到 OneDrive 网盘Test目录中
-OneDriveUploader -s "Download" -r "Test"
+OneDriveUploader -s "Megamiryou no Ryoubokun" -r "共享/里番"
 # 将同目录下的 Download 文件夹上传到 OneDrive 网盘Test目录中, 使用 10 线程
 OneDriveUploader -t 10 -s "Download" -r "Test"
 # 将同目录下的 Download 文件夹上传到 OneDrive 网盘Test目录中, 使用 15 线程, 并设置分块大小为 20M

@@ -27,40 +27,42 @@ aria2c --max-download-limit=300K -s10 -x10 'http://xx.com/xx'
 整体下载最大速度：
 aria2c --max-overall-download-limit=300k -s10 -x10 'http://xx.com/xx'
 
-#获取root账户
-sudo su
-#安装
-apt-get install davfs2
-#把用户名和密码写入secrets文件,以便自动登录.
-echo "https://kita.teracloud.jp/dav/ username password" >> /etc/davfs2/secrets
-#获取权限
-chmod 600 /etc/davfs2/secrets
-#将davfs2.conf配置文件中的use_locks的默认值1修改为0
-sed -i 's/# use_locks          1/# use_locks          0/g' /etc/davfs2/davfs2.conf
-#挂载到fstab(文件管理器自动能显示出来)
-echo "https://kita.teracloud.jp/dav/ /home/pc_username/webdav/teracloud davfs user,rw,noauto 0 1" >> /etc/fstab
-#非root账户挂载,把 pc_username 账户加入 davfs2 组,不用root权限也可以挂载.
-usermod -a -G davfs2 pc_username
-
-zip -r x.zip x
-unzip aliyunpan-v0.2.6-linux-amd64.zip
-1、把/home目录下面的mydata目录压缩为mydata.zip
-cd /home    #进入/home目录
-zip -r mydata.zip mydata    #压缩mydata目录
-2、把/home目录下面的mydata.zip解压到mydatabak目录里面
-unzip mydata.zip -d mydatabak
-3、把/home目录下面的abc文件夹和123.txt压缩成为abc123.zip
-zip -r abc123.zip abc 123.txt
-4、把/home目录下面的wwwroot.zip直接解压到/home目录里面
-nzip wwwroot.zip
-5、把/home目录下面的abc12.zip、abc23.zip、abc34.zip同时解压到/home目录里面
-unzip abc\*.zip
-6、查看把/home目录下面的wwwroot.zip里面的内容
-unzip -v wwwroot.zip
-7、验证/home目录下面的wwwroot.zip是否完整
-unzip -t wwwroot.zip
-8、把/home目录下面wwwroot.zip里面的所有文件解压到第一级目录
-unzip -j wwwroot.zip
+授权认证
+点击右侧URL登录并授权，授权地址→【国际版、个人版(家庭版)】、【中国版(世纪互联)】。
+1、下载，并给权限
+wget https://raw.githubusercontent.com/MoeClub/OneList/master/OneDriveUploader/amd64/linux/OneDriveUploader
+chmod +x OneDriveUploader
+2、初始化
+OneDriveUploader -a "url"
+把url替换为上图浏览器中获得的地址，以http://loaclhost开头的。一次授权，以后就不会用到了。
+3、配置文件
+授权成功后，就在同目录生成了配置文件 auth.json (所以，为便于操作，选择个好记的目录执行 初始化)
+修改配置文件，也可以不修改，我主要是改了线程
+34d20eda8fbe8ed912863b3de5890829.png
+4、使用命令，所有命令后面的参数都要有英文双引号 “”
+-s // *必要参数，要上传的文件或文件夹
+-r // 上传到网盘中的某个目录，默认: 根目录
+-t // 线程数, 同时上传文件的个数. 默认: 2
+-b // 自定义上传分块大小, 可以提高网络吞吐量, 受限于磁盘性能和网络速度.
+-c // 配置文件路径
+-f // 开关
+// 加上 -f 参数，强制读取 auth.json 中的块大小配置和多线程配置.
+// 不加 -f 参数, 每次覆盖保存当前使用参数到 auth.json 配置文件中.
+-n // 上传单个文件时,在网盘中重命名
+5、使用举例
+# 将同目录下的 mm00.jpg 文件上传到 OneDrive 网盘根目录
+OneDriveUploader -s "mm00.jpg"
+# 将同目录下的 mm00.jpg 文件上传到 OneDrive 网盘根目录,并改名为 mm01.jpg
+OneDriveUploader -s "mm00.jpg" -n "mm01.jpg"
+# 将同目录下的 Download 文件夹上传到 OneDrive 网盘根目录
+OneDriveUploader -s "Download"
+# 将同目录下的 Download 文件夹上传到 OneDrive 网盘Test目录中
+OneDriveUploader -s "Download" -r "Test"
+# 将同目录下的 Download 文件夹上传到 OneDrive 网盘Test目录中, 使用 10 线程
+OneDriveUploader -t 10 -s "Download" -r "Test"
+# 将同目录下的 Download 文件夹上传到 OneDrive 网盘Test目录中, 使用 15 线程, 并设置分块大小为 20M
+OneDriveUploader -t 15 -b 20 -s "Download" -r "Test"
+6、如果文件多、大，可让程序后台运行：nohub OneDriveUploader -s “文件或目录” &
 
 使用 删除不再使用的包。
 sudo apt autoremove
